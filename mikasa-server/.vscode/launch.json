@@ -1,30 +1,23 @@
 {
-  "version": "0.0.1",
+  "version": "0.2.0",
   "configurations": [
     {
+      "name": "dev",
       "type": "node",
       "request": "launch",
-      "name": "Debug Express Server",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/dist/index.js",
-      "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "sourceMaps": true,
-      "smartStep": true,
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      //"console": "integratedTerminal",
       "internalConsoleOptions": "openOnSessionStart",
-      "env": {
-        "NODE_ENV": "development"
-      }
+      "skipFiles": ["<node_internals>/**"]
     },
     {
+      "name": "attach",
       "type": "node",
       "request": "attach",
-      "name": "Attach to Process",
-      "processId": "${command:PickProcess}",
+      "port": 7000,
       "restart": true,
-      "skipFiles": ["<node_internals>/**"],
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "sourceMaps": true
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

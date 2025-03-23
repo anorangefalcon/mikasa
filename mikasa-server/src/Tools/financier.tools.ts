@@ -1,6 +1,6 @@
 import { Tool } from "ai";
 import { z } from "zod";
-import { categories, bankAccounts } from "../../constants.js";
+import { categories, bankAccounts } from "../../constants/base.js";
 
 export const createTransactionDetails: Tool = {
   description:
