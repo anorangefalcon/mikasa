@@ -11,6 +11,6 @@ export const createTransactionDetails: Tool = {
     category: z.enum(categories).describe("Category of the purchased item"),
     bank: z
       .enum(bankAccounts)
-      .describe("Bank account used for the transaction"),
+      .describe("Bank account used for the transaction, default use BOB"),
   }),
 };
