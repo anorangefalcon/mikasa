@@ -4,8 +4,13 @@ import { updateExpenseTracker } from "../../Services/notion.service.js";
 import { loadModel } from "../../Services/model.service.js";
 import { ai_model } from "../../../constants/base.js";
 import { getPrompt } from "../../../constants/prompts.js";
+import { AuthenticatedRequest } from "../../Middlewares/verifyUser.js";
+import { Response } from "express";
 
-export async function postTransaction(req: any, res: any) {
+export async function postTransaction(
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> {
   try {
     const { query } = req.body;
     if (!query) throw new Error("Query is required");
@@ -28,10 +33,13 @@ export async function postTransaction(req: any, res: any) {
       // maxSteps: 2,
     });
 
-    res.send({ message: text, steps, success: true });
-    console.log(text, steps);
+    res.status(200).json({
+      message: text,
+      success: true,
+      toolResult: steps[0]?.toolResults,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).send({ message: error, success: false });
+    res.status(500).json({ message: error, success: false });
   }
 }

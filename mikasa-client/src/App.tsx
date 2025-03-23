@@ -3,9 +3,12 @@ import "./App.css";
 
 function App() {
   // const hehe = async () => {
-  //   axios.post(`http://localhost:3000/mikasa/financier`, {
-  //     query: "I spent 838 on mobile recharge via baroda bank",
-  //   });
+  //   axios.post(
+  //     `http://localhost:3000/mikasa/financier`,
+  //     {
+  //       query: "I spent 838 on mobile recharge via baroda",
+  //     },
+  //   );
   // };
 
   return <></>;
