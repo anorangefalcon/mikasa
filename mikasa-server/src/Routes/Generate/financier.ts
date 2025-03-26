@@ -4,6 +4,6 @@ import { verifyApiKey } from "../../Middlewares/verifyUser.js";
 
 const router = express.Router();
 
-router.post("/", verifyApiKey, postTransaction);
+router.post("/", postTransaction);
 
 export default router;

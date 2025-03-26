@@ -9,7 +9,7 @@ let _CACHE: {
 
 export async function updateExpenseTracker(options: any) {
   try {
-    const { item, amount, category, bank } = options;
+    const { item, amount, category, bank, date } = options;
     const { categories, banks } = await getCategoriesAndBanksWithIds();
 
     const body = {
@@ -28,7 +28,7 @@ export async function updateExpenseTracker(options: any) {
         },
         Date: {
           date: {
-            start: new Date().toISOString(),
+            start: date,
           },
         },
         Amount: {
