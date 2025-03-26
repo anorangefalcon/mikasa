@@ -14,7 +14,7 @@ let _CACHE = null;
 export function updateExpenseTracker(options) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { item, amount, category, bank } = options;
+            const { item, amount, category, bank, date } = options;
             const { categories, banks } = yield getCategoriesAndBanksWithIds();
             const body = {
                 parent: {
@@ -32,7 +32,7 @@ export function updateExpenseTracker(options) {
                     },
                     Date: {
                         date: {
-                            start: new Date().toISOString(),
+                            start: date,
                         },
                     },
                     Amount: {
