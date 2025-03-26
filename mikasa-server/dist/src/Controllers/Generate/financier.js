@@ -13,13 +13,18 @@ import { updateExpenseTracker } from "../../Services/notion.service.js";
 import { loadModel } from "../../Services/model.service.js";
 import { ai_model } from "../../../constants/base.js";
 import { getPrompt } from "../../../constants/prompts.js";
+import fs from "fs/promises";
 export function postTransaction(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a;
         try {
-            const { query } = req.body;
-            if (!query)
-                throw new Error("Query is required");
+            let { query } = req.body;
+            const { file } = req;
+            if (!query && !file)
+                throw new Error("Query or File is required");
+            if (file) {
+                query = yield fs.readFile(file.path, "utf-8");
+            }
             const addTransactionTool = getTool("useTransactionDetails", updateExpenseTracker);
             const model = loadModel(ai_model);
             const prompt = getPrompt("financier", { query });

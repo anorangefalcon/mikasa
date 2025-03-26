@@ -6,14 +6,20 @@ import { ai_model } from "../../../constants/base.js";
 import { getPrompt } from "../../../constants/prompts.js";
 import { AuthenticatedRequest } from "../../Middlewares/verifyUser.js";
 import { Response } from "express";
+import fs from "fs/promises";
 
 export async function postTransaction(
   req: AuthenticatedRequest,
   res: Response
 ): Promise<void> {
   try {
-    const { query } = req.body;
-    if (!query) throw new Error("Query is required");
+    let { query } = req.body;
+    const { file } = req;
+    if (!query && !file) throw new Error("Query or File is required");
+
+    if (file) {
+      query = await fs.readFile(file.path, "utf-8");
+    }
 
     const addTransactionTool: Tool = getTool(
       "useTransactionDetails",
