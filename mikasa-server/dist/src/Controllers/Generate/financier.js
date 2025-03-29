@@ -16,7 +16,6 @@ import { getPrompt } from "../../../constants/prompts.js";
 import fs from "fs/promises";
 export function postTransaction(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        var _a;
         try {
             let { query } = req.body;
             const { file } = req;
@@ -30,17 +29,23 @@ export function postTransaction(req, res) {
             const prompt = getPrompt("financier", { query });
             if (!model || !prompt)
                 throw new Error("Model not supported or Prompt not found");
-            const { text, steps } = yield generateText({
+            const { steps } = yield generateText({
                 model: model,
                 prompt,
                 tools: { addNewTransaction: addTransactionTool },
                 toolChoice: { type: "tool", toolName: "addNewTransaction" },
                 // maxSteps: 2,
             });
+            const results = steps
+                .flatMap((step) => step.toolResults)
+                .map((res) => {
+                return (res === null || res === void 0 ? void 0 : res.result) || "";
+            });
+            const combinedResult = results.join(" & ");
             res.status(200).json({
-                message: text,
                 success: true,
-                toolResult: (_a = steps[0]) === null || _a === void 0 ? void 0 : _a.toolResults,
+                results,
+                message: combinedResult,
             });
         }
         catch (error) {

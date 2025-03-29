@@ -54,8 +54,13 @@ export function updateExpenseTracker(options) {
                     },
                 },
             };
-            const res = yield axios.post(`${API_URL}/pages`, body, getHeaders());
-            return res.data;
+            yield axios.post(`${API_URL}/pages`, body, getHeaders());
+            const formattedDate = new Date(date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+            return `Financier: ${item} for ${amount}, ${bank}/${category} on ${formattedDate}`;
         }
         catch (error) {
             console.error(error);
