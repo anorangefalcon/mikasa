@@ -31,7 +31,7 @@ export async function postTransaction(
     if (!model || !prompt)
       throw new Error("Model not supported or Prompt not found");
 
-    const { text, steps } = await generateText({
+    const { steps } = await generateText({
       model: model,
       prompt,
       tools: { addNewTransaction: addTransactionTool },
@@ -39,10 +39,18 @@ export async function postTransaction(
       // maxSteps: 2,
     });
 
+    const results = steps
+      .flatMap((step) => step.toolResults)
+      .map((res: any) => {
+        return res?.result || "";
+      });
+
+    const combinedResult = results.join(" & ");
+
     res.status(200).json({
-      message: text,
       success: true,
-      toolResult: steps[0]?.toolResults,
+      results,
+      message: combinedResult,
     });
   } catch (error) {
     console.error(error);

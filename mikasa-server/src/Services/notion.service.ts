@@ -50,9 +50,14 @@ export async function updateExpenseTracker(options: any) {
         },
       },
     };
-    const res = await axios.post(`${API_URL}/pages`, body, getHeaders());
+    await axios.post(`${API_URL}/pages`, body, getHeaders());
 
-    return res.data;
+    const formattedDate = new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    return `Financier: ${item} for ${amount}, ${bank}/${category} on ${formattedDate}`;
   } catch (error) {
     console.error(error);
     return error;

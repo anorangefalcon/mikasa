@@ -46,6 +46,20 @@ function App() {
     }
   };
 
+  const handlePost = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:6600/mikasa/financier/`,
+        { query: "Bought iphone for 60k sbi and bananas for 20" },
+        {
+          headers: {
+            "x-api-key": "",
+          },
+        }
+      );
+    } catch (error) {}
+  };
+
   return (
     <div className="upload-container">
       <h2>Upload Transaction File</h2>
@@ -56,6 +70,8 @@ function App() {
         </button>
       </div>
       {message && <p className="message">{message}</p>}
+
+      <button onClick={handlePost}>hit post query</button>
     </div>
   );
 }
