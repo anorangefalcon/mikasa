@@ -15,4 +15,4 @@ export const categories = [
 
 export const bankAccounts = ["BOB", "SBI"] as const;
 
-export const ai_model = "google/models/gemini-2.0-flash-exp";
+export const ai_model = "google/models/gemini-2.0-flash";
